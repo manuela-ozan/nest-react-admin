@@ -9,7 +9,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Sidebar className={showSidebar ? 'show' : ''} />
-      <div className="pt-10 lg:ml-72 mx-auto px-5 sm:px-10 py-5">
+      <div className="pt-10 lg:ml-72 mx-auto px-5 sm:px-10 py-5 ">
         {children}
       </div>
       <button

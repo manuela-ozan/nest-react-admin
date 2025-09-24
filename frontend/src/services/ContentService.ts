@@ -42,4 +42,5 @@ class ContentService {
   }
 }
 
-export default new ContentService();
+const contentService = new ContentService();
+export default contentService;

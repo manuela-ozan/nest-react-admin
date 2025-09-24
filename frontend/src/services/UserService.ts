@@ -25,14 +25,8 @@ class UserService {
     id: string,
     updateUserRequest: UpdateUserRequest,
   ): Promise<void> {
-    const {
-      firstName,
-      isActive,
-      lastName,
-      password,
-      role,
-      username,
-    } = updateUserRequest;
+    const { firstName, isActive, lastName, password, role, username } =
+      updateUserRequest;
     await apiService.put(`/api/users/${id}`, {
       firstName: firstName || undefined,
       lastName: lastName || undefined,
@@ -48,4 +42,5 @@ class UserService {
   }
 }
 
-export default new UserService();
+const userService = new UserService();
+export default userService;
