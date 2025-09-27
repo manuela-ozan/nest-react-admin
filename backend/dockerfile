@@ -1,32 +1,34 @@
-FROM node:alpine as build
+FROM node:18 AS build
 
 WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
+COPY package.json yarn.lock ./
 
-RUN yarn
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
 RUN yarn build
 
-#---
 
-FROM node:alpine
+FROM node:18-alpine
 
 WORKDIR /app
-
 ENV NODE_ENV=production
 
-COPY package.json .
-COPY yarn.lock .
-COPY ormconfig.js .
+RUN addgroup -S app && adduser -S app -G app
 
-RUN yarn install --production
+COPY package.json yarn.lock ./
+
+RUN yarn install --frozen-lockfile --production
 
 COPY --from=build /app/dist ./dist
 
+
+COPY ormconfig.js ./
+
+USER app
+
 EXPOSE 5000
 
-ENTRYPOINT [ "yarn", "start:prod" ]
+CMD ["node", "dist/main.js"]
